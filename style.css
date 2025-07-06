@@ -45,3 +45,82 @@ section {
   text-decoration: none;
   border-radius: 6px;
 }
+.menu-item {
+  background: #1b1b1b;
+  padding: 1em;
+  border-radius: 12px;
+  text-align: center;
+  transform: translateY(30px);
+  opacity: 0;
+  transition: all 0.6s ease;
+}
+
+.menu-item.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+.button:hover {
+  background: #e67e22;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+h2, h3 {
+  animation: fadeInUp 1s ease both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.button:hover {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 5px #e67e22;
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #e67e22;
+  }
+}
+.menu-item:hover {
+  box-shadow: 0 10px 20px rgba(255, 165, 0, 0.6);
+  transition: box-shadow 0.4s ease;
+}
+header {
+  position: sticky;
+  top: 0;
+  background: #222;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.7);
+  z-index: 1000;
+  transition: background 0.3s ease;
+}
+
+header.scrolled {
+  background: #1a1a1a;
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const items = document.querySelectorAll('.menu-item, img, h2, h3');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  items.forEach(item => {
+    observer.observe(item);
+  });
+});
+
